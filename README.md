@@ -22,8 +22,10 @@ Here is a simple example of a river network simulation
 ``` r
 library(riversim)
 
-# Download modis data
+# Generate the river network
 river <- rivernetwork(1000)
+
+# Visualize it
 plot(river, col = "cornflowerblue", border = NA)
 axis(1)
 axis(2)
