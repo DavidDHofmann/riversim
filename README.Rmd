@@ -1,37 +1,46 @@
 ---
-output:
-  github_document:
-  html_preview: false
-editor_options:
-  chunk_output_type: console
+output: github_document
 ---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # riversim <img src="man/figures/riversim.png" align="right" width="150" height="150"/>
 `riversim` is an R-package that allows you to simulate river networks. The
-algorithm was originally developed by a [reddit user](https://www.reddit.com/r/proceduralgeneration/comments/ftgbgo/ive_been_working_on_an_algorithm_to_efficiently/).
+algorithm was originally developed by a [reddit
+user](https://www.reddit.com/r/proceduralgeneration/comments/ftgbgo/ive_been_working_on_an_algorithm_to_efficiently/).
 
 ## Installation
-To install `riversim` you need to have the package `devtools` installed. You
-can simply do:
+You can install the development version of riversim from
+[GitHub](https://github.com/) with:
 
 ``` r
-library(devtools)
-install_github("DavidDHofmann/riversim")
+# install.packages("devtools")
+devtools::install_github("DavidDHofmann/riversim")
 ```
 
 ## Example
 Here is a simple example of a river network simulation
 
-``` r
+```{r, echo = T, warning = F, message = F}
+# Load required packages
 library(riversim)
 
-# Download modis data
+# Generate a river network and visualize it
 river <- rivernetwork(1000)
 plot(river, col = "cornflowerblue", border = NA)
 axis(1)
 axis(2)
 
-# The network can also be returned as a raster
+# You can also generate rasterized river networks
 river <- rivernetwork(1000, raster = T)
 plot(river, col = c("white", "cornflowerblue"))
 ```
