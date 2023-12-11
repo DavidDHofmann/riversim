@@ -30,11 +30,9 @@ library(riversim)
 # Generate a river network and visualize it
 river <- rivernetwork(1000, progressbar = F)
 plot(river, col = "cornflowerblue", border = NA)
-axis(1)
-axis(2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 ``` r
 
@@ -43,4 +41,4 @@ river <- rivernetwork(1000, raster = T, progressbar = F)
 plot(river, col = c("white", "cornflowerblue"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-2.png" width="100%" />

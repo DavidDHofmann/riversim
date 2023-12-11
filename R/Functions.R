@@ -1,9 +1,8 @@
 ################################################################################
 #### Load Dependencies
 ################################################################################
+#' @import terra igraph
 #' @importFrom deldir deldir
-#' @importFrom rgeos gBuffer
-#' @importFrom maptools elide
 NULL
 
 ################################################################################
@@ -44,6 +43,21 @@ NULL
 #' plot(riv, col = c("white", "cornflowerblue"))
 rivernetwork <- function(n_points = 1000, xmn = 0, ymn = 0, scl = 1
   , progressbar = T, raster = F, nrow = 250, ncol = 250) {
+
+  # Testing
+  # library(igraph)
+  # library(deldir)
+  # library(raster)
+  # library(rgeos)
+  # n_points <- 1000
+  # xmn <- 0
+  # ymn <- 0
+  # scl <- 1
+  # progressbar <- T
+  # raster <- T
+  # nrow <- 250
+  # ncol <- 250
+  # scl <- 3
 
   # Sample points
   pts <- .samplePoints(n = n_points, deg = 4)
@@ -176,7 +190,7 @@ rivernetwork <- function(n_points = 1000, xmn = 0, ymn = 0, scl = 1
 
   # If a raster is deisred, rasterize the river network
   if (raster) {
-    r <- raster(net, nrow = nrow, ncol = ncol)
+    r <- rast(net, nrow = nrow, ncol = ncol)
     net <- rasterize(net, r, field = 1, background = 0)
   }
 
@@ -309,7 +323,7 @@ rivernetwork <- function(n_points = 1000, xmn = 0, ymn = 0, scl = 1
 
   # Convert to spatial lines
   lines <- lapply(1:nrow(edges), function(x) {
-    l <- spLines(SpatialPoints(rbind(
+    l <- as.lines(vect(rbind(
         c(edges$x1[x], edges$y1[x])
       , c(edges$x2[x], edges$y2[x])
     )))
@@ -319,12 +333,12 @@ rivernetwork <- function(n_points = 1000, xmn = 0, ymn = 0, scl = 1
 
   # Buffer lines according to their computed width
   width <- sqrt(edges$Weight) / sqrt(nrow(edges)) * 8 / 500
-  lines_b <- gBuffer(lines, width = width, byid = T)
+  lines_b <- buffer(lines, width = width)
   lines_b <- aggregate(lines_b, dissolve = T)
 
   # If required, stretch
   if (xmn != 0 | ymn != 0 | scl != 1) {
-    lines_b <- elide(lines_b, scale = scl)
+    lines_b <- rescale(lines_b, fx = scl)
     lines_b <- shift(lines_b, dx = xmn - xmin(lines_b), dy = ymn - ymin(lines_b))
   }
 

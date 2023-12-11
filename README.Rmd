@@ -24,7 +24,7 @@ nodes than in the examples below (e.g. 10'000 or even 50'000).
 You can install the development version of riversim from
 [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval=F}
 # install.packages("devtools")
 devtools::install_github("DavidDHofmann/riversim")
 ```
@@ -39,8 +39,6 @@ library(riversim)
 # Generate a river network and visualize it
 river <- rivernetwork(1000, progressbar = F)
 plot(river, col = "cornflowerblue", border = NA)
-axis(1)
-axis(2)
 
 # You can also generate rasterized river networks
 river <- rivernetwork(1000, raster = T, progressbar = F)
